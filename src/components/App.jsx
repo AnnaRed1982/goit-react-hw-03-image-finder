@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import axios from 'axios';
 import { Searchbar } from 'components/Searchbar/Searchbar';
+import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 
 const API_KEY = '32381232-0d08b52c11723d23aba771294';
 
@@ -21,17 +22,12 @@ export class App extends Component {
 
   render() {
     const { images } = this.state;
+
     return (
       <div>
         <Searchbar />
 
-        <ul>
-          {images.map(({ id, webformatURL, largeImageURL }) => (
-            <li key={id}>
-              <img src={webformatURL} alt="" />
-            </li>
-          ))}
-        </ul>
+        <ImageGallery images={images} />
       </div>
     );
   }
