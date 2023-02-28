@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import axios from 'axios';
+
 import { Searchbar } from 'components/Searchbar/Searchbar';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 
@@ -24,7 +25,7 @@ export class App extends Component {
     const { images } = this.state;
 
     return (
-      <div>
+      <div className='app'>
         <Searchbar />
 
         <ImageGallery images={images} />
