@@ -13,6 +13,8 @@ export class App extends Component {
     images: [],
   };
 
+  addSearch = () => {};
+
   async componentDidMount() {
     const response = await axios.get(
       `https://pixabay.com/api/?q=cat&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12&page=1`
@@ -20,15 +22,22 @@ export class App extends Component {
     this.setState({ images: response.data.hits });
     console.log(this.state.images);
   }
+  // async componentDidUpdate() {
+  //   const response = await axios.get(
+  //     `https://pixabay.com/api/?q=cat&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12&page=1`
+  //   );
+  //   this.setState({ images: response.data.hits });
+  //   console.log(this.state.images);
+  // }
 
   render() {
     const { images } = this.state;
 
     return (
-      <div className='app'>
-        <Searchbar />
+      <div className="app">
+        <Searchbar onSubmit={this.addSearch} />
 
-        <ImageGallery images={images} />
+        {images.length > 0 ? <ImageGallery images={images} /> : null}
       </div>
     );
   }
