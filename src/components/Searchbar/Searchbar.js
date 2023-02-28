@@ -2,24 +2,22 @@ import { Component } from 'react';
 import css from './Searchbar.module.css';
 
 export class Searchbar extends Component {
-  state = { input: '' };
+  state = { serchRequest: '' };
 
-  handleInputChange = e => {
-    this.setState({input: e.currentTarget.value.toLowerCase()})
+  handleSerchRequestChange = e => {
+    this.setState({ serchRequest: e.currentTarget.value.toLowerCase() });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    // const { input } = e.target.elements;
 
-    // if (this.props.contacts.find(contact => contact.name === name.value)) {
-    //   alert(`${name.value} is already in contacts!`);
-    //   e.currentTarget.reset();
-    //   return;
-    // }
+    if (this.state.serchRequest.trim() === '') {
+      return alert('Please fill search request!');
+    }
 
-    this.props.onSubmit(this.state.input);
-    e.currentTarget.reset();
+    this.props.onSubmit(this.state.serchRequest);
+    this.setState({ serchRequest: '' });
+    // e.currentTarget.reset();
   };
 
   render() {
@@ -33,9 +31,9 @@ export class Searchbar extends Component {
           <input
             className={css['searchForm-input']}
             type="text"
-            name="input"
-            value={this.state.input}
-            onChange={this.handleInputChange}
+            name="serchRequest"
+            value={this.state.serchRequest}
+            onChange={this.handleSerchRequestChange}
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
