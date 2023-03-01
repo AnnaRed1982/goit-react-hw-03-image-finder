@@ -8,10 +8,7 @@ export class ImageGalleryItem extends Component {
   };
 
   modalToggle = () => {
-    this.setState(({ isModalOpen }) => ({ isModalOpen: !isModalOpen }));
-  };
-  modalClose = () => {
-    this.setState({ isModalOpen: false });
+    this.setState({ isModalOpen: !this.state.isModalOpen });
   };
 
   render() {
@@ -26,7 +23,7 @@ export class ImageGalleryItem extends Component {
           onClick={this.modalToggle}
         />
         {this.state.isModalOpen && (
-          <Modal largeImageURL={largeImageURL} onClose={this.modalClose} />
+          <Modal largeImageURL={largeImageURL} onClose={this.modalToggle} />
         )}
       </li>
     );
