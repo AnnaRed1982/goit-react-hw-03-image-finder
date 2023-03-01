@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import axios from 'axios';
-import { Audio } from 'react-loader-spinner';
+import { Loder } from '../Loader/Loader';
 
 import css from './ImageGallery.module.css';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
@@ -33,15 +33,7 @@ export class ImageGallery extends Component {
     const { status, error, images } = this.state;
 
     if (status === 'pending') {
-      return (
-        <Audio
-          height="580"
-          width="280"
-          radius="9"
-          color="blue"
-          ariaLabel="loading"
-        />
-      );
+      return <Loder />;
     }
 
     if (status === 'rejected') {
