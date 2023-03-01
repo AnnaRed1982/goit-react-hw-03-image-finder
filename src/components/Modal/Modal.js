@@ -17,11 +17,17 @@ export class Modal extends Component {
     }
   };
 
+  handleBackDropClick = e => {
+    if (e.target === e.currentTarget) {
+      this.props.onClose();
+    }
+  };
+
   render() {
     const { largeImageURL } = this.props;
 
     return (
-      <div className={css.overlay}>
+      <div className={css.overlay} onClick={this.handleBackDropClick}>
         <div className={css.modal}>
           <img src={largeImageURL} alt="largeImage" />
         </div>
