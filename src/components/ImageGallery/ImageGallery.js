@@ -23,6 +23,7 @@ export class ImageGallery extends Component {
         );
 
         this.setState({ images: response.data.hits, status: 'resolved' });
+        console.log(response.data.hits);
       } catch (error) {
         this.setState({ status: 'rejected', error });
       }
@@ -48,6 +49,7 @@ export class ImageGallery extends Component {
               key={id}
               webformatURL={webformatURL}
               tags={tags}
+              largeImageURL={largeImageURL}
             />
           ))}
         </ul>
