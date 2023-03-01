@@ -1,6 +1,17 @@
-import css from '../Modal/Modal.module.css'
+import { Component } from 'react';
+import css from '../Modal/Modal.module.css';
 
-export const Modal = ({largeImageURL}) => {
+export class Modal extends Component {
+  componentDidMount() {
+    window.addEventListener('keydown', e => {
+      if (e.code === 'Escape') {
+        this.props.onClose();
+      }
+    });
+  }
+  render() {
+    const { largeImageURL } = this.props;
+
     return (
       <div className={css.overlay}>
         <div className={css.modal}>
@@ -8,4 +19,5 @@ export const Modal = ({largeImageURL}) => {
         </div>
       </div>
     );
-};
+  }
+}
