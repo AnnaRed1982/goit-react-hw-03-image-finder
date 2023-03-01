@@ -4,6 +4,7 @@ import { Loder } from '../Loader/Loader';
 
 import css from './ImageGallery.module.css';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
+import { Button } from '../Button/Button';
 
 const API_KEY = '32381232-0d08b52c11723d23aba771294';
 
@@ -12,14 +13,18 @@ export class ImageGallery extends Component {
     images: [],
     error: null,
     status: null,
+    page: 1,
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    if (prevProps.serchRequest !== this.props.serchRequest) {
+    if (
+      prevProps.serchRequest !== this.props.serchRequest ||
+      prevState.page !== this.state.page
+    ) {
       this.setState({ status: 'pending' });
       try {
         const response = await axios.get(
-          `https://pixabay.com/api/?q=${this.props.serchRequest}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12&page=1`
+          `https://pixabay.com/api/?q=${this.props.serchRequest}&page=${this.state.page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12&`
         );
 
         this.setState({ images: response.data.hits, status: 'resolved' });
@@ -29,6 +34,9 @@ export class ImageGallery extends Component {
       }
     }
   }
+  loadMore = () => {
+    this.setState(({ page: this.state.page + 1 }));
+  };
 
   render() {
     const { status, error, images } = this.state;
@@ -43,16 +51,19 @@ export class ImageGallery extends Component {
 
     if (status === 'resolved') {
       return (
-        <ul className={css.ImageGallery}>
-          {images.map(({ id, webformatURL, tags, largeImageURL }) => (
-            <ImageGalleryItem
-              key={id}
-              webformatURL={webformatURL}
-              tags={tags}
-              largeImageURL={largeImageURL}
-            />
-          ))}
-        </ul>
+        <>
+          <ul className={css.ImageGallery}>
+            {images.map(({ id, webformatURL, tags, largeImageURL }) => (
+              <ImageGalleryItem
+                key={id}
+                webformatURL={webformatURL}
+                tags={tags}
+                largeImageURL={largeImageURL}
+              />
+            ))}
+          </ul>
+          <Button onClick={this.loadMore} />
+        </>
       );
     }
   }
