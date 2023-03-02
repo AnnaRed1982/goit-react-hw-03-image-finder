@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import axios from 'axios';
 import { Loder } from '../Loader/Loader';
+import PropTypes from 'prop-types'
 
 import css from './ImageGallery.module.css';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
@@ -31,17 +32,17 @@ export class ImageGallery extends Component {
         const response = await axios.get(
           `https://pixabay.com/api/?q=${this.props.serchRequest}&page=${this.state.page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12&`
         );
+        if (response.data.hits.length === 0) {
+          this.setState({ status: null });
+          return alert(
+            'Sorry, there are no images matching your search query. Please try again.'
+          );
+        }
         if (response.data.hits.length > 0) {
           this.setState(({ images }) => ({
             images: [...images, ...response.data.hits],
             status: 'resolved',
           }));
-        }
-
-        if (response.data.hits.length === 0) {
-          return alert(
-            'Sorry, there are no images matching your search query. Please try again.'
-          );
         }
       } catch (error) {
         this.setState({ status: 'rejected', error });
@@ -85,6 +86,12 @@ export class ImageGallery extends Component {
     }
   }
 }
+
+ImageGallery.propTypes = {
+  serchRequest: PropTypes.string,
+};
+
+
 
 // export const ImageGallery = ({ images }) => {
 //   return (

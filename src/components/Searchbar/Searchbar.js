@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import css from './Searchbar.module.css';
 import { RxMagnifyingGlass } from 'react-icons/rx';
+import PropTypes from 'prop-types';
 
 export class Searchbar extends Component {
   state = { serchRequest: '' };
@@ -45,3 +46,6 @@ export class Searchbar extends Component {
     );
   }
 }
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func,
+};
