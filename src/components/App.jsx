@@ -6,6 +6,7 @@ import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 export class App extends Component {
   state = {
     serchRequest: '',
+    page: 1,
   };
 
   handleFormSubmit = serchRequest => {

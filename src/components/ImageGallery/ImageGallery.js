@@ -17,6 +17,11 @@ export class ImageGallery extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
+    if (prevProps.serchRequest !== this.props.serchRequest) {
+      this.state.images = [];
+      this.state.page = 1;
+    }
+
     if (
       prevProps.serchRequest !== this.props.serchRequest ||
       prevState.page !== this.state.page
@@ -26,16 +31,28 @@ export class ImageGallery extends Component {
         const response = await axios.get(
           `https://pixabay.com/api/?q=${this.props.serchRequest}&page=${this.state.page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12&`
         );
+        if (response.data.hits.length > 0) {
+          this.setState(({ images }) => ({
+            images: [...images, ...response.data.hits],
+            status: 'resolved',
+          }));
+        }
 
-        this.setState({ images: response.data.hits, status: 'resolved' });
-        console.log(response.data.hits);
+        if (response.data.hits.length === 0) {
+          return alert(
+            'Sorry, there are no images matching your search query. Please try again.'
+          );
+        }
       } catch (error) {
         this.setState({ status: 'rejected', error });
       }
     }
   }
+
   loadMore = () => {
-    this.setState(({ page: this.state.page + 1 }));
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
   };
 
   render() {

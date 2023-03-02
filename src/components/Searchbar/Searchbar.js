@@ -26,7 +26,7 @@ export class Searchbar extends Component {
       <header className={css.searchbar}>
         <form className={css.searchForm} onSubmit={this.handleSubmit}>
           <button type="submit" className={css['searchForm-button']}>
-            <RxMagnifyingGlass size="30"/>
+            <RxMagnifyingGlass size="30" />
             <span className={css['searchForm-button-label']}>Search</span>
           </button>
 
