@@ -1,13 +1,10 @@
 import { Component } from 'react';
-import axios from 'axios';
-import { Loder } from '../Loader/Loader';
-import PropTypes from 'prop-types'
-
+import { fetchSearchImage } from '../../services/api';
+import { Loader } from '../Loader/Loader';
+import PropTypes from 'prop-types';
 import css from './ImageGallery.module.css';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { Button } from '../Button/Button';
-
-const API_KEY = '32381232-0d08b52c11723d23aba771294';
 
 export class ImageGallery extends Component {
   state = {
@@ -29,18 +26,19 @@ export class ImageGallery extends Component {
     ) {
       this.setState({ status: 'pending' });
       try {
-        const response = await axios.get(
-          `https://pixabay.com/api/?q=${this.props.serchRequest}&page=${this.state.page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12&`
+        const response = await fetchSearchImage(
+          this.props.serchRequest,
+          this.state.page
         );
-        if (response.data.hits.length === 0) {
+        if (response.length === 0) {
           this.setState({ status: null });
           return alert(
             'Sorry, there are no images matching your search query. Please try again.'
           );
         }
-        if (response.data.hits.length > 0) {
+        if (response.length > 0) {
           this.setState(({ images }) => ({
-            images: [...images, ...response.data.hits],
+            images: [...images, ...response],
             status: 'resolved',
           }));
         }
@@ -60,7 +58,7 @@ export class ImageGallery extends Component {
     const { status, error, images } = this.state;
 
     if (status === 'pending') {
-      return <Loder />;
+      return <Loader />;
     }
 
     if (status === 'rejected') {
@@ -90,8 +88,6 @@ export class ImageGallery extends Component {
 ImageGallery.propTypes = {
   serchRequest: PropTypes.string,
 };
-
-
 
 // export const ImageGallery = ({ images }) => {
 //   return (
@@ -160,3 +156,21 @@ ImageGallery.propTypes = {
 //     );
 //   }
 // }
+
+//  const response = await axios.get(
+//    `https://pixabay.com/api/?q=${this.props.serchRequest}&page=${this.state.page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12&`
+//  );
+//  if (response.data.hits.length === 0) {
+//    this.setState({ status: null });
+//    return alert(
+//      'Sorry, there are no images matching your search query. Please try again.'
+//    );
+//  }
+//  if (response.data.hits.length > 0) {
+//    this.setState(({ images }) => ({
+//      images: [...images, ...response.data.hits],
+//      status: 'resolved',
+//    }));
+//  }
+// const API_KEY = '32381232-0d08b52c11723d23aba771294';
+// import axios from 'axios';
