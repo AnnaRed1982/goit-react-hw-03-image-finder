@@ -8,7 +8,7 @@ import { Button } from '../Button/Button';
 
 export class ImageGallery extends Component {
   state = {
-    images: null,
+    images: [],
     error: null,
     status: null,
     page: 1,
@@ -20,7 +20,7 @@ export class ImageGallery extends Component {
       this.state.images = [];
       this.state.page = 1;
       //Работает неправильно - заходит несколько раз в функцию:
-      // this.setState({page:1, images:[]}) 
+      // this.setState({page:1, images:[]})
     }
 
     if (
