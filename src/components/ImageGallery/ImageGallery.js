@@ -16,9 +16,11 @@ export class ImageGallery extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     if (prevProps.serchRequest !== this.props.serchRequest) {
+      //Работает правильно:
       this.state.images = [];
       this.state.page = 1;
-      // this.setState({page:1, images:null})
+      //Работает неправильно - заходит несколько раз в функцию:
+      // this.setState({page:1, images:[]}) 
     }
 
     if (
