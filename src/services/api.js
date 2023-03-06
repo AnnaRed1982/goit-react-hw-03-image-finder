@@ -1,4 +1,6 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
+
 const API_KEY = '32381232-0d08b52c11723d23aba771294';
 
 export const fetchSearchImage = async (serchRequest, page) => {
@@ -8,4 +10,7 @@ export const fetchSearchImage = async (serchRequest, page) => {
   return response.data.hits;
 };
 
-
+fetchSearchImage.PropTypes = {
+  serchRequest: PropTypes.string,
+  page: PropTypes.number,
+};

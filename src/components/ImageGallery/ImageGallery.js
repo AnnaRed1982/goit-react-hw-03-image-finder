@@ -8,7 +8,7 @@ import { Button } from '../Button/Button';
 
 export class ImageGallery extends Component {
   state = {
-    images: [],
+    images: null,
     error: null,
     status: null,
     page: 1,
@@ -18,6 +18,7 @@ export class ImageGallery extends Component {
     if (prevProps.serchRequest !== this.props.serchRequest) {
       this.state.images = [];
       this.state.page = 1;
+      // this.setState({page:1, images:null})
     }
 
     if (
